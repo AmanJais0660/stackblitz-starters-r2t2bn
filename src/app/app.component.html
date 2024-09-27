@@ -1,0 +1,15 @@
+<div
+  class="d-flex flex-column justify-content-center align-items-center vh-100 text-center"
+>
+  <h1>Hello Time Picker</h1>
+  <div class="my-3">
+    <app-common-timepicker
+      [(modelValue)]="clockIn"
+      [id]="'clockInEl'"
+      [name]="'clockInEl'"
+      [meridian]="meredian"
+    >
+    </app-common-timepicker>
+  </div>
+  <pre>{{ clockIn | json }}</pre>
+</div>
