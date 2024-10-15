@@ -111,23 +111,33 @@ export class CommonTimepickerComponent implements AfterViewInit {
   }
 
   updateTimeView(newValue?: any) {
+    debugger;
     if (newValue) {
-      // Reset the timepicker value
-      if (this.timePicker) this.timePicker.writeValue(null);
-      this.cdr.detectChanges();
-      this.timePicker.writeValue(newValue);
-      this.modelValueChange.emit(newValue);
-      // Calculate AM/PM based on the hours from newValue
-      const hours = newValue.hour; // Assuming newValue is a Date object
-      const meridian = hours >= 12 ? 'PM' : 'AM'; // Determine AM/PM
-      // Access the timepicker's input element directly
-      const timepickerElement = this.timePickerElement.nativeElement; // Access the underlying element
-      const meridianSelect = timepickerElement.querySelector(
-        'select.header-select'
-      );
-      if (meridianSelect) {
-        this.renderer.setProperty(meridianSelect, 'value', meridian); // Update the dropdown value
-      }
+        // Reset the timepicker value
+        if (this.timePicker) this.timePicker.writeValue(null);
+        this.cdr.detectChanges();
+        this.timePicker.writeValue(newValue);
+        this.modelValueChange.emit(newValue);
+
+        // Calculate AM/PM based on the hours from newValue
+        const hours = newValue.hour; // Assuming newValue is a Date object
+        const meridian = hours >= 12 ? 'PM' : 'AM'; // Determine AM/PM
+
+        // Access the timepicker's input element directly
+        const timepickerElement = this.timePickerElement.nativeElement; // Access the underlying element
+        const meridianSelect = timepickerElement.querySelector('select.header-select');
+        if (meridianSelect) {
+            this.renderer.setProperty(meridianSelect, 'value', meridian); // Update the dropdown value
+        }
+    } else {
+        this.modelValueChange.emit(null);
+        // Optionally, reset the AM/PM dropdown if necessary
+        const timepickerElement = this.timePickerElement.nativeElement;
+        const meridianSelect = timepickerElement.querySelector('select.header-select');
+        if (meridianSelect) {
+            this.renderer.setProperty(meridianSelect, 'value', 'AM'); // Clear the dropdown value
+        }
     }
-  }
+}
+
 }
